@@ -1,4 +1,4 @@
-const country = "United States";
+const country = "The United States";
 const continent = "North America";
 let population = 332915073;
 
@@ -18,4 +18,19 @@ language = "English";
 
 // changed unchanging variables to const
 
-country = "Europe"; // when attempting to change const, error appears in console
+const halfPop = population / 2;
+
+population++;
+console.log(population);
+
+const finlandPop = 6000000;
+const avgPop = 33000000;
+
+console.log(population > finlandPop);
+console.log(population < avgPop);
+
+const description = country + " is in " + continent + ", and its " + population + " people speak " + language;
+console.log(description);
+
+
+
