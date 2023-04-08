@@ -44,11 +44,18 @@ if (population > avgPop) {
     console.log(`${country}'s population is ${avgPop - population} below average`);
 }
 
-*/
 
 console.log('9' - '5'); // 4
 console.log('19' - '13' + '17'); // 617
 console.log('19' - '13' + 17); // 23
 console.log('123' < 57); // false
 console.log(5 + 6 + '4' + 9 - 4 - 2); // 1143
+
+*/
+
+
+const numNeighbors = Number(prompt('How many neighbour countries does your country have?'));
+if (numNeighbors === 1) console.log("only 1 border");
+else if (numNeighbors > 1) console.log("more than one border");
+else console.log("no borders");
 
