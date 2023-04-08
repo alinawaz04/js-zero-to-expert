@@ -30,8 +30,18 @@ console.log(population > finlandPop);
 console.log(population < avgPop);
 
 const description = country + " is in " + continent + ", and its " + population + " people speak " + language;
-const descriptionLiteral = `${country} is in s${continent}, and its ${population} people speak ${language}`;
+const descriptionLiteral = `${country} is in ${continent}, and its ${population} people speak ${language}`;
+
 console.log(descriptionLiteral);
+
+population = 13000000;
+population = 332915073;
+
+if (population > avgPop) {
+    console.log(`${country}'s population is above average`)
+} else {
+    console.log(`${country}'s population is ${avgPop - population} below average`);
+}
 
 
 
