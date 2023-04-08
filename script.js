@@ -1,14 +1,11 @@
-const markWeight = 78;
-const markHeight = 1.69;
-const johnWeight = 92;
-const johnHeight = 1.95;
+const dolphinsAvg = (97 + 112 + 101) / 3;
+const koalasAvg = (109 + 95 + 106) / 3;
+const minScore = 100;
 
-const markBMI = markWeight / (markHeight ** 2);
-const johnBMI = johnWeight / (johnHeight ** 2);
-console.log(markBMI, johnBMI);
-
-if (markBMI > johnBMI) {
-    console.log(`Mark's BMI(${markBMI}) is higher than John's BMI(${johnBMI})`)
-} else (
-    console.log(`John's BMI(${johnBMI}) is higher than Mark's BMI(${markBMI})`)
-)
+if (dolphinsAvg > koalasAvg && dolphinsAvg >= minScore) {
+    console.log("Dolphins win");
+} else if (koalasAvg > dolphinsAvg && koalasAvg >= minScore) {
+    console.log("Koalas win");
+} else if (koalasAvg === dolphinsAvg && dolphinsAvg >= minScore && koalasAvg >= minScore) {
+    console.log("It's a draw");
+} else console.log("minimum score not met");
