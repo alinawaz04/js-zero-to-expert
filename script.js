@@ -92,7 +92,6 @@ switch (language) {
         break;
 }
 
-*/
 
 const language = "English";
 const population = 332915073;
@@ -101,3 +100,11 @@ const avgPop = 33000000;
 
 
 console.log(`${country}'s population is ${population > avgPop ? "above" : "below"} average`);
+*/
+
+function describeCountry(country, population, capitalCity) {
+    console.log(`${country} has ${population} people and its capital city is ${capitalCity}`);
+}
+
+const usDescription = describeCountry("United States", "300 million", "Washingon DC");
+console.log(usDescription);

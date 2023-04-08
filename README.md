@@ -1,7 +1,7 @@
-LECTURE: The Conditional (Ternary) Operator
-1. If your country's population is greater than 33 million, use the ternary operator 
-to log a string like this to the console: 'Portugal's population is above average'. 
-Otherwise, simply log 'Portugal's population is below average'. Notice how only
-one word changes between these two sentences!
-2. After checking the result, change the population temporarily to 13 and then to 
-130. See the different results, and set the population back to original
+LECTURE: Functions
+1. Write a function called 'describeCountry' which takes three parameters: 
+'country', 'population' and 'capitalCity'. Based on this input, the 
+function returns a string with this format: 'Finland has 6 million people and its 
+capital city is Helsinki'
+2. Call this function 3 times, with input data for 3 different countries. Store the 
+returned values in 3 different variables, and log them to the console
