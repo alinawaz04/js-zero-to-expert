@@ -108,7 +108,6 @@ function describeCountry(country, population, capitalCity) {
 const usDescription = describeCountry("United States", "300 million", "Washingon DC");
 console.log(usDescription);
 
-*/
 
 function percentageOfWorld1(population) {
     return (population / 7900) * 100;
@@ -135,3 +134,8 @@ console.log(usPercent);
 
 russiaPercent = percentageOfWorld2(145);
 console.log(russiaPercent);
+*/
+
+const percentageOfWorld3 = population => (population / 7900) * 100;
+
+console.log(percentageOfWorld3(1441));
