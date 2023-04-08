@@ -59,7 +59,6 @@ if (numNeighbors === 1) console.log("only 1 border");
 else if (numNeighbors > 1) console.log("more than one border");
 else console.log("no borders");
 
-*/
 const language = "Chinese";
 const population = 332915073;
 const country = "The United States";
@@ -92,3 +91,13 @@ switch (language) {
         console.log("great language too");
         break;
 }
+
+*/
+
+const language = "English";
+const population = 332915073;
+const country = "The United States";
+const avgPop = 33000000;
+
+
+console.log(`${country}'s population is ${population > avgPop ? "above" : "below"} average`);
