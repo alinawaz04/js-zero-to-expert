@@ -100,7 +100,6 @@ const avgPop = 33000000;
 
 
 console.log(`${country}'s population is ${population > avgPop ? "above" : "below"} average`);
-*/
 
 function describeCountry(country, population, capitalCity) {
     console.log(`${country} has ${population} people and its capital city is ${capitalCity}`);
@@ -108,3 +107,31 @@ function describeCountry(country, population, capitalCity) {
 
 const usDescription = describeCountry("United States", "300 million", "Washingon DC");
 console.log(usDescription);
+
+*/
+
+function percentageOfWorld1(population) {
+    return (population / 7900) * 100;
+}
+
+chinaPercent = percentageOfWorld1(1441);
+console.log(chinaPercent);
+
+usPercent = percentageOfWorld1(300);
+console.log(usPercent);
+
+russiaPercent = percentageOfWorld1(145);
+console.log(russiaPercent);
+
+const percentageOfWorld2 = function (population) {
+    return (population / 7900) * 100;
+}
+
+chinaPercent = percentageOfWorld2(1441);
+console.log(chinaPercent);
+
+usPercent = percentageOfWorld2(300);
+console.log(usPercent);
+
+russiaPercent = percentageOfWorld2(145);
+console.log(russiaPercent);
