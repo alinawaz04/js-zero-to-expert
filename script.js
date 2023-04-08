@@ -60,13 +60,35 @@ else if (numNeighbors > 1) console.log("more than one border");
 else console.log("no borders");
 
 */
-const language = "English";
+const language = "Chinese";
 const population = 332915073;
 const country = "The United States";
 
 
-if (language === "English" && population < 50000000) {
-    console.log(`You should live in ${country}`);
-} else {
-    console.log(`${country} does not meet your criteria`);
+// if (language === "English" && population < 50000000) {
+//     console.log(`You should live in ${country}`);
+// } else {
+//     console.log(`${country} does not meet your criteria`);
+// }
+
+switch (language) {
+    case "Chinese":
+    case "Mandarin":
+        console.log("most number of native speakers");
+        break;
+    case "Spanish":
+        console.log("2nd place in number of speakers");
+        break;
+    case "English":
+        console.log("3rd place");
+        break;
+    case "Hindi":
+        console.log("Number 4");
+        break;
+    case "Arabic":
+        console.log("5th most spoken language");
+        break;
+    default:
+        console.log("great language too");
+        break;
 }
