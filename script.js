@@ -30,7 +30,8 @@ console.log(population > finlandPop);
 console.log(population < avgPop);
 
 const description = country + " is in " + continent + ", and its " + population + " people speak " + language;
-console.log(description);
+const descriptionLiteral = `${country} is in s${continent}, and its ${population} people speak ${language}`;
+console.log(descriptionLiteral);
 
 
 
