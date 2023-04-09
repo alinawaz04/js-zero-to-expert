@@ -1,0 +1,19 @@
+h1 {
+  font-size: 40px;
+}
+
+#idea-form {
+  border: 5px solid #020202;
+}
+
+#idea-form p {
+  color: white;
+  font-family: Arial;
+  font-size: 18px;
+  background-color: #020202;
+}
+
+#idea-form button {
+  background-color: rgb(108, 25, 133);
+  color: #ecebeb;
+}
