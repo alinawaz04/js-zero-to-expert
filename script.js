@@ -173,7 +173,6 @@ function checkWinner(koalas, dolphins) {
 
 checkWinner(koalasAvg, dolphinsAvg);
 
-*/
 
 function calcTip(value) {
     if (value <= 300 && value >= 50) {
@@ -191,4 +190,30 @@ console.log("Tips: ", tips);
 
 const total = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
 console.log("Total: ", total);
+*/
+
+const Mark = {
+    fullName: "Mark Smith",
+    mass: 78,
+    height: 1.69,
+    calcBMI: function () {
+        this.BMI = this.mass / (this.height ** 2);
+        return this.BMI;
+    }
+}
+
+const John = {
+    fullName: "John Smith",
+    mass: 92,
+    height: 1.95,
+    calcBMI: function () {
+        this.BMI = this.mass / (this.height ** 2);
+        return this.BMI;
+    }
+}
+console.log(Mark.calcBMI());
+console.log(John.calcBMI());
+
+console.log(Mark.calcBMI() > John.calcBMI() ? `Mark's BMI(${Mark.calcBMI()}) is higher than John's(${John.calcBMI()})` : `John's BMI (${John.calcBMI()}) is greater than Mark's(${Mark.calcBMI()}))`);
+
 
