@@ -151,7 +151,6 @@ console.log(china);
 
 russia = describePopulation("Russia", 145);
 console.log(us);
-*/
 
 function percentageOfWorld1(population) {
     return (population / 7900) * 100;
@@ -160,6 +159,21 @@ function percentageOfWorld1(population) {
 const populations = [300, 1441, 145, 200]
 console.log(populations.length === 4);
 
-const percentages = [percentageOfWorld1(populations[0]),
-percentageOfWorld1(populations[1]), percentageOfWorld1(populations[2]), percentageOfWorld1(populations[3]),];
+const percentages = [percentageOfWorld1(populations[0]), percentageOfWorld1(populations[1]), percentageOfWorld1(populations[2]), percentageOfWorld1(populations[3]),];
 console.log(percentages);
+*/
+
+const USneighbors = ["Canada", "Mexico"];
+USneighbors.push("Utopia");
+console.log(USneighbors);
+USneighbors.pop();
+console.log(USneighbors);
+
+if (!USneighbors.includes("Germany")) {
+    console.log("Probably not a European country");
+}
+
+USneighbors[0] = "Canada Schmanda";
+console.log(USneighbors);
+
+
