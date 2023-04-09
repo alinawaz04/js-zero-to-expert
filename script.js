@@ -181,13 +181,26 @@ const myCountry = {
     capital: "Washington DC",
     language: "English",
     population: 300000000,
-    neighbors: ["Canada", "Mexico"]
+    neighbors: ["Canada", "Mexico"],
+
+    describe: function () {
+        console.log(`${this.country} has ${this.population} ${this.language}-speaking people, ${this.neighbors.length} neighboring countries and a capital called ${this.capital}`);
+    },
+
+    checkIsland: function () {
+        this.isIsland = this.neighbors.length <= 0 ? true : false;
+        return this.isIsland;
+    }
 };
 
-console.log(`${myCountry.country} has ${myCountry.population} ${myCountry.language}-speaking people, ${myCountry.neighbors.length} neighboring countries and a capital called ${myCountry.capital}`);
+// console.log(`${myCountry.country} has ${myCountry.population} ${myCountry.language}-speaking people, ${myCountry.neighbors.length} neighboring countries and a capital called ${myCountry.capital}`);
 
-myCountry.population += 2000000;
-console.log(myCountry.population);
+// myCountry.population += 2000000;
+// console.log(myCountry.population);
 
-myCountry["population"] -= 2000000;
-console.log(myCountry.population);
+// myCountry["population"] -= 2000000;
+// console.log(myCountry.population);
+
+myCountry.describe();
+
+console.log(myCountry.checkIsland());
