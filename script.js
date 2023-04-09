@@ -203,8 +203,28 @@ const myCountry = {
 myCountry.describe();
 
 console.log(myCountry.checkIsland());
-*/
 
 for (let i = 1; i <= 50; i++) {
     console.log("Voter number " + i + " is currently voting");
 }
+*/
+
+function percentageOfWorld1(population) {
+    return (population / 7900) * 100;
+}
+
+// chinaPercent = percentageOfWorld1(1441);
+// console.log(chinaPercent);
+
+// usPercent = percentageOfWorld1(300);
+// console.log(usPercent);
+
+// russiaPercent = percentageOfWorld1(145);
+// console.log(russiaPercent);
+
+const populations = [300, 1441, 145, 200];
+const percentages2 = []
+for (let i = 0; i < populations.length; i++) {
+    percentages2[i] = [percentageOfWorld1(populations[i])];
+}
+console.log(percentages2);
