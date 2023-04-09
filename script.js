@@ -161,7 +161,6 @@ console.log(populations.length === 4);
 
 const percentages = [percentageOfWorld1(populations[0]), percentageOfWorld1(populations[1]), percentageOfWorld1(populations[2]), percentageOfWorld1(populations[3]),];
 console.log(percentages);
-*/
 
 const USneighbors = ["Canada", "Mexico"];
 USneighbors.push("Utopia");
@@ -175,5 +174,13 @@ if (!USneighbors.includes("Germany")) {
 
 USneighbors[0] = "Canada Schmanda";
 console.log(USneighbors);
+*/
 
+const myCountry = {
+    country: "The United States",
+    capital: "Washington DC",
+    language: "English",
+    population: 300000000,
+    neighbors: ["Canada", "Mexico"]
+};
 
