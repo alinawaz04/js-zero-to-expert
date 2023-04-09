@@ -134,8 +134,21 @@ console.log(usPercent);
 
 russiaPercent = percentageOfWorld2(145);
 console.log(russiaPercent);
-*/
 
 const percentageOfWorld3 = population => (population / 7900) * 100;
 
-console.log(percentageOfWorld3(1441));
+console.log(percentageOfWorld3(1441)); 
+*/
+function percentageOfWorld1(population) {
+    return (population / 7900) * 100;
+}
+const describePopulation = (country, population) => `${country} has ${population} million people, which is about ${percentageOfWorld1(population)}% of the world.`;
+
+us = describePopulation("The United States", 300);
+console.log(us);
+
+china = describePopulation("China", 1441);
+console.log(china);
+
+russia = describePopulation("Russia", 145);
+console.log(us);
