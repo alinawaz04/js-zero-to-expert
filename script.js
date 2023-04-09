@@ -227,7 +227,6 @@ for (let i = 0; i < populations.length; i++) {
     percentages2[i] = [percentageOfWorld1(populations[i])];
 }
 console.log(percentages2);
-*/
 
 const listOfNeighbors = [
     ["Canada", "Mexico"],
@@ -239,3 +238,17 @@ for (let i = 0; i < listOfNeighbors.length; i++) {
         console.log(listOfNeighbors[i][c])
     }
 }
+
+*/
+const populations = [300, 1441, 145, 200];
+const percentages3 = [];
+let i = 0;
+function percentageOfWorld1(population) {
+    return (population / 7900) * 100;
+}
+
+while (i < populations.length) {
+    percentages3[i] = [percentageOfWorld1(populations[i])];
+    i++
+}
+console.log(percentages3);
