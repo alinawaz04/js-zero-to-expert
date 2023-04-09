@@ -1,8 +1,9 @@
-# LECTURE: Functions Calling Other Functions
-1. Create a function called 'describePopulation'. Use the function type you 
-like the most. This function takes in two arguments: 'country' and 
-'population', and returns a string like this: 'China has 1441 million people, 
-which is about 18.2% of the world.'
-2. To calculate the percentage, 'describePopulation' call the 
-'percentageOfWorld1' you created earlier
-3. Call 'describePopulation' with data for 3 countries of your choice
+# LECTURE: Introduction to Arrays
+1. Create an array containing 4 population values of 4 countries of your choice. 
+You may use the values you have been using previously. Store this array into a 
+variable called 'populations'
+2. Log to the console whether the array has 4 elements or not (true or false)
+3. Create an array called 'percentages' containing the percentages of the 
+world population for these 4 population values. Use the function 
+'percentageOfWorld1' that you created earlier to compute the 4 
+percentage values
