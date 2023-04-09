@@ -174,7 +174,6 @@ if (!USneighbors.includes("Germany")) {
 
 USneighbors[0] = "Canada Schmanda";
 console.log(USneighbors);
-*/
 
 const myCountry = {
     country: "The United States",
@@ -204,3 +203,8 @@ const myCountry = {
 myCountry.describe();
 
 console.log(myCountry.checkIsland());
+*/
+
+for (let i = 1; i <= 50; i++) {
+    console.log("Voter number " + i + " is currently voting");
+}
