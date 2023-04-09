@@ -153,3 +153,25 @@ russia = describePopulation("Russia", 145);
 console.log(us);
 */
 
+
+
+const calcAverage = (x, y, z) => (x + y + z) / 3;
+
+dolphinsAvg = calcAverage(85, 54, 41);
+console.log(dolphinsAvg);
+
+koalasAvg = calcAverage(23, 34, 27);
+console.log(koalasAvg);
+
+function checkWinner(koalas, dolphins) {
+    if (koalas >= (2 * dolphins)) {
+        console.log(`Koalas win (${koalas} vs ${dolphins})`);
+    } else if (dolphins >= (2 * koalas)) {
+        console.log(`dolphins win (${dolphins} vs ${koalas})`);
+    } else console.log("no winner");
+
+}
+
+checkWinner(koalasAvg, dolphinsAvg);
+
+
