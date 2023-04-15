@@ -13,3 +13,7 @@ Your tasks:
 3. Restore the initial conditions of the message, number, score and guess input
    fields
 4. Also restore the original background color (#222) and number width (15rem)
+
+## Pop Up Window Functionality
+
+Every time the user guesses a number, a pop up window that displays the result of the guess (too low, too high, you win, you lose) is displayed. Also allows the user to submit their guess by pressing the Enter key versus having to click the Check button.
