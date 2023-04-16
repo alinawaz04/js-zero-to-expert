@@ -7,22 +7,32 @@ const score0El = document.querySelector("#score--0");
 const score1El = document.getElementById("score--1");
 const current0El = document.getElementById("current--0");
 const current1El = document.getElementById("current--1");
+const maxEl = document.querySelector(".max-number");
 const diceEl = document.querySelector(".dice");
 const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
+const btnCloseModal = document.querySelector(".close-modal");
+const max = document.querySelector(".max");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const input = document.querySelector(".input");
+const btnSubmit = document.getElementById("submit");
 
 //staring status
 let scores;
 let currentScore;
 let activePlayer;
 let playing;
+let maxScore;
 
 const init = function () {
   scores = [0, 0];
   currentScore = 0;
   activePlayer = 0;
   playing = true;
+  maxScore = 10;
+  maxEl.textContent = maxScore;
 
   score0El.textContent = 0;
   score1El.textContent = 0;
@@ -36,6 +46,12 @@ const init = function () {
   player1El.classList.remove("player--active");
 };
 
+const closeModal = function () {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+};
+
+max.classList.remove("hidden");
 init();
 
 // function for switching active player
@@ -58,8 +74,8 @@ btnRoll.addEventListener("click", function () {
     diceEl.classList.remove("hidden");
     diceEl.src = `dice-${dice}.png`;
 
-    // 3. check for 1; if true, switch to next player
-    if (dice !== 1) {
+    // 3. check for 1 or 5; if true, switch to next player
+    if (dice !== 1 && dice !== 5) {
       currentScore += dice;
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
@@ -78,7 +94,7 @@ btnHold.addEventListener("click", function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
     // 2. Check if player's score is >= 100
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= maxScore) {
       // finish game
       playing = false;
       document
@@ -96,4 +112,31 @@ btnHold.addEventListener("click", function () {
 });
 
 // new game button functionality
-btnNew.addEventListener("click", init);
+
+btnNew.addEventListener("click", function () {
+  max.classList.add("hidden");
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+
+  init();
+});
+
+btnSubmit.addEventListener("click", function () {
+  if (isNaN(input.value) || input.value === "") {
+    return;
+  }
+
+  const randomNum = Math.floor(Math.random() * 10) + 1;
+  for (let i = 0; i < randomNum; i++) {
+    switchPlayer();
+  }
+
+  let value = input.value;
+  maxScore = value;
+  maxEl.textContent = maxScore;
+  closeModal();
+  max.classList.remove("hidden");
+});
+
+btnCloseModal.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);

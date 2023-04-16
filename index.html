@@ -30,7 +30,22 @@
       <button class="btn btn--new">🔄 New game</button>
       <button class="btn btn--roll">🎲 Roll dice</button>
       <button class="btn btn--hold">📥 Hold</button>
+
+      <div class="modal hidden">
+        <button class="close-modal">&times;</button>
+        <h1>Select a Maximum Number</h1>
+        <input type="Number" class="input" />
+        <button id="submit">Submit</button>
+      </div>
+
+      <div class="overlay hidden"></div>
     </main>
+
+    <div class="max hidden">
+      <div class="max-label">Max Number</div>
+      <div class="max-number">10</div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
