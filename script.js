@@ -1,142 +1,56 @@
 "use strict";
 
-// selecting elements
-const player0El = document.querySelector(".player--0");
-const player1El = document.querySelector(".player--1");
-const score0El = document.querySelector("#score--0");
-const score1El = document.getElementById("score--1");
-const current0El = document.getElementById("current--0");
-const current1El = document.getElementById("current--1");
-const maxEl = document.querySelector(".max-number");
-const diceEl = document.querySelector(".dice");
-const btnNew = document.querySelector(".btn--new");
-const btnRoll = document.querySelector(".btn--roll");
-const btnHold = document.querySelector(".btn--hold");
-const btnCloseModal = document.querySelector(".close-modal");
-const max = document.querySelector(".max");
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const input = document.querySelector(".input");
-const btnSubmit = document.getElementById("submit");
+// Scoping in Practice
 
-//staring status
-let scores;
-let currentScore;
-let activePlayer;
-let playing;
-let maxScore;
+/*
+    1) What are the three types of scoping?
 
-const init = function () {
-  scores = [0, 0];
-  currentScore = 0;
-  activePlayer = 0;
-  playing = true;
-  maxScore = 10;
-  maxEl.textContent = maxScore;
+    function scope, block scope and global scope
 
-  score0El.textContent = 0;
-  score1El.textContent = 0;
-  current0El.textContent = 0;
-  current1El.textContent = 0;
+    2) What makes var different from let and const?
 
-  diceEl.classList.add("hidden");
-  player0El.classList.remove("player--winner");
-  player1El.classList.remove("player--winner");
-  player0El.classList.add("player--active");
-  player1El.classList.remove("player--active");
-};
+    var is function scoped and are subject to hoisting.
+    let and const are block scoped and are not subject to hoisting
 
-const closeModal = function () {
-  modal.classList.add("hidden");
-  overlay.classList.add("hidden");
-};
+    3) Pick 3 variables with different scopes and label what scope they are.
 
-max.classList.remove("hidden");
-init();
+    global scope:
+    let globalVar = "I am a global variable"
 
-// function for switching active player
-const switchPlayer = function () {
-  document.getElementById(`current--${activePlayer}`).textContent = 0;
-  currentScore = 0;
-  activePlayer = activePlayer === 0 ? 1 : 0;
-  player0El.classList.toggle("player--active");
-  player1El.classList.toggle("player--active");
-};
+    function myFunction() {
+        function scope:
+        let functionVar = "I am a function variable"
+    }
 
-// rolling dice functionality
-btnRoll.addEventListener("click", function () {
-  // 1. generate random dice roll
-  if (playing) {
-    const dice = Math.trunc(Math.random() * 6) + 1;
-    console.log(dice);
+    block scope:
+    if(true) {
+        const blockVar = "I am a block-scoped variable"
+    }
 
-    // 2. display dice
-    diceEl.classList.remove("hidden");
-    diceEl.src = `dice-${dice}.png`;
+*/
 
-    // 3. check for 1 or 5; if true, switch to next player
-    if (dice !== 1 && dice !== 5) {
-      currentScore += dice;
-      document.getElementById(`current--${activePlayer}`).textContent =
-        currentScore;
-    } else {
-      // switch to next player
-      switchPlayer();
+function calcAge(birthYear) {
+  const age = 2037 - birthYear;
+
+  function printAge() {
+    const output = `${firstName}, you are ${age}, born in ${birthYear}`;
+    console.log(output);
+
+    if (birthYear >= 1981 && birthYear <= 1996) {
+      const firstName = "Bob";
+      const str = `Oh, and you're a millenial, ${firstName}`;
+      console.log(str);
+
+      function add(a, b) {
+        return a + b;
+      }
     }
   }
-});
 
-// hold score functionality
-btnHold.addEventListener("click", function () {
-  if (playing) {
-    // 1. add current score to active players score
-    scores[activePlayer] += currentScore;
-    document.getElementById(`score--${activePlayer}`).textContent =
-      scores[activePlayer];
-    // 2. Check if player's score is >= 100
-    if (scores[activePlayer] >= maxScore) {
-      // finish game
-      playing = false;
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.add("player--winner");
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.remove("player--active");
-      diceEl.classList.add("hidden");
-    } else {
-      // 3. Switch to the next player
-      switchPlayer();
-    }
-  }
-});
+  printAge();
 
-// new game button functionality
+  return age;
+}
 
-btnNew.addEventListener("click", function () {
-  max.classList.add("hidden");
-  modal.classList.remove("hidden");
-  overlay.classList.remove("hidden");
-
-  init();
-});
-
-btnSubmit.addEventListener("click", function () {
-  if (isNaN(input.value) || input.value === "") {
-    return;
-  }
-
-  const randomNum = Math.floor(Math.random() * 10) + 1;
-  for (let i = 0; i < randomNum; i++) {
-    switchPlayer();
-  }
-
-  let value = input.value;
-  maxScore = value;
-  maxEl.textContent = maxScore;
-  closeModal();
-  max.classList.remove("hidden");
-});
-
-btnCloseModal.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+const firstName = "Ali";
+calcAge(1991);
