@@ -1,41 +1,77 @@
-"use strict";
-//         Problem: why is this.borderCountries undefined
-const country = {
-  name: "United States",
-  borderCountries: 2,
-  printDescription: function () {
-    const isIsland = function () {
-      if (this.borderCountries != 0) {
-        //Why is this.borderCountries undefinded
-        return false;
-      } else {
-        return true;
-      }
-    };
-
-    // console.log(`${this.name} is an island ${isIsland()}`);
+const game = {
+  team1: "Bayern Munich",
+  team2: "Borrussia Dortmund",
+  players: [
+    [
+      "Neuer",
+      "Pavard",
+      "Martinez",
+      "Alaba",
+      "Davies",
+      "Kimmich",
+      "Goretzka",
+      "Coman",
+      "Muller",
+      "Gnarby",
+      "Lewandowski",
+    ],
+    [
+      "Burki",
+      "Schulz",
+      "Hummels",
+      "Akanji",
+      "Hakimi",
+      "Weigl",
+      "Witsel",
+      "Hazard",
+      "Brandt",
+      "Sancho",
+      "Gotze",
+    ],
+  ],
+  score: "4:0",
+  scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
+  date: "Nov 9th, 2037",
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
   },
 };
 
-// country.printDescription();
+//          1.
+const [players1, players2] = game.players;
+console.log("   1.", players1, players2);
 
-// this.borderCOuntries is undefined becuase the function "isIsland" is a regular function which creates its own scope, which causes this to refer to the global window object, which is undefined. To fix this, we simply need to use an arrow function instead.
+//          2.
+const [gk, ...fieldPlayers] = players1;
+console.log("   2.", gk, fieldPlayers);
 
-// Solution:
-const countryFixed = {
-  name: "United States",
-  borderCountries: 2,
-  printDescription: function () {
-    const isIsland = () => {
-      if (this.borderCountries != 0) {
-        return false;
-      } else {
-        return true;
-      }
-    };
+//          3.
+const allPlayers = [...players1, ...players2];
+console.log("   3.", allPlayers);
 
-    console.log(`${this.name} is an island ${isIsland()}`);
-  },
+//          4.
+const players1Final = [...players1, ...["Thiago", "Coutinho", "Perisic"]];
+console.log("   4.", players1Final);
+
+//          5.
+const { team1, x: draw, team2 } = game.odds;
+console.log("   5.", team1, draw, team2);
+
+//          6.
+const printGoals = function (...names) {
+  for (let i = 0; i < names.length; i++) {
+    console.log(names[i]);
+  }
+  console.log(names.length);
 };
+console.log("   6.");
+printGoals("Davies", "Muller", "Lewandowski", "Kimmich");
+printGoals(...game.scored);
 
-countryFixed.printDescription();
+//          7.
+console.log("   7.");
+
+team1 < team2 && console.log("Team 1 more likely to win");
+team2 < team1 && console.log("Team 2 more likely to win");
