@@ -38,6 +38,42 @@ const game = {
     team2: 6.5,
   },
 };
+//                          CHALLENGE 4
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+const camelCase = function (str) {
+  const strL = str.toLowerCase().trim();
+  const index = strL.indexOf("_") + 1;
+  return (
+    strL.slice(0, index - 1) +
+    strL[index].toUpperCase() +
+    strL.slice(index + 1).trim()
+  );
+};
+
+const camelCaseLines = function (str, char, num) {
+  const lines = str.split("\n");
+  const camelCaseLines = lines.map((line, index) => {
+    const suffix = char.repeat(num * (index + 1));
+    return camelCase(line) + suffix;
+  });
+  return camelCaseLines.join("\n");
+};
+
+const btn = document.querySelector("button");
+const text = document.querySelector("textarea");
+btn.addEventListener("click", function () {
+  console.log(camelCaseLines(text.value, "✅", 1).trim());
+});
+/*
+
+underscore_case
+ first_name
+Some_Variable
+  calculate_AGE
+delayed_departure
+
 
 //                          CHALLENGE 2
 
@@ -67,7 +103,7 @@ for (const player of game.scored) {
   scorers[player] ? scorers[player]++ : (scorers[player] = 1);
 }
 console.log(scorers);
-/*                          CHALLENGE 1
+   //                       CHALLENGE 1
 //          1.
 const [players1, players2] = game.players;
 console.log("   1.", players1, players2);

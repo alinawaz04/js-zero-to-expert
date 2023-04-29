@@ -1,24 +1,25 @@
-Coding Challenge #2
-Let's continue with our football betting app! Keep using the 'game' variable from
-before.
-Your tasks:
+# Coding Challenge #4
 
-1. Loop over the game.scored array and print each player name to the console,
-   along with the goal number (Example: "Goal 1: Lewandowski")
-2. Use a loop to calculate the average odd and log it to the console (We already
-   studied how to calculate averages, you can go check if you don't remember)
-3. Print the 3 odds to the console, but in a nice formatted way, exactly like this:
-   Odd of victory Bayern Munich: 1.33
-   Odd of draw: 3.25
-   Odd of victory Borrussia Dortmund: 6.5
-   Get the team names directly from the game object, don't hardcode them
-   (except for "draw"). Hint: Note how the odds and the game objects have the
-   same property names �
-4. Bonus: Create an object called 'scorers' which contains the names of the
-   players who scored as properties, and the number of goals as the value. In this
-   game, it will look like this:
-   {
-   Gnarby: 1,
-   Hummels: 1,
-   Lewandowski: 2
-   }
+Write a program that receives a list of variable names written in underscore_case
+and convert them to camelCase.
+The input will come from a textarea inserted into the DOM (see code below to
+insert the elements), and conversion will happen when the button is pressed.
+Test data (pasted to textarea, including spaces):
+underscore_case
+first_name
+Some_Variable
+calculate_AGE
+delayed_departure
+Should produce this output (5 separate console.log outputs):
+underscoreCase ✅
+firstName ✅✅
+someVariable ✅✅✅
+calculateAge ✅✅✅✅
+delayedDeparture ✅✅✅✅✅
+Hints:
+§ Remember which character defines a new line in the textarea �
+§ The solution only needs to work for a variable made out of 2 words, like a_b
+§ Start without worrying about the ✅. Tackle that only after you have the variable
+name conversion working �
+§ This challenge is difficult on purpose, so start watching the solution in case
+you're stuck. Then pause and continue!
