@@ -1,3 +1,5 @@
+/*
+//          section 10 challenge 1
 const poll = {
   question: "What is your favourite programming language?",
   options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
@@ -42,3 +44,15 @@ const displayResultsBonus = poll.displayResults.call(
   { answers: [5, 2, 3] },
   "string"
 );
+*/
+
+//          section 10 challenge 2
+(function () {
+  const header = document.querySelector("h1");
+  const body = document.querySelector("body");
+  header.style.color = "red";
+
+  body.addEventListener("click", function () {
+    header.style.color = "blue";
+  });
+})();
