@@ -23,19 +23,34 @@
 
 //          TODO section 11 challenge 2
 
+// const data = [5, 2, 4, 1, 15, 8, 3];
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(function (age) {
+//     if (age <= 2) return 2 * age;
+//     else return 16 + age * 4;
+//   });
+//   const adults = humanAges.filter(function (age) {
+//     return age >= 18;
+//   });
+//   const avgHumanAge =
+//     adults.reduce(function (acc, curr) {
+//       return acc + curr;
+//     }, 0) / adults.length;
+//   return avgHumanAge;
+// };
+// console.log(calcAverageHumanAge(data));
+
+//          TODO section 11 challenge 3
+
 const data = [5, 2, 4, 1, 15, 8, 3];
+
 const calcAverageHumanAge = function (ages) {
-  const humanAges = ages.map(function (age) {
-    if (age <= 2) return 2 * age;
-    else return 16 + age * 4;
-  });
-  const adults = humanAges.filter(function (age) {
-    return age > 18;
-  });
-  const avgHumanAge =
-    adults.reduce(function (acc, curr) {
-      return acc + curr;
-    }, 0) / adults.length;
-  return avgHumanAge;
+  return ages
+    .map((age) => {
+      if (age <= 2) return 2 * age;
+      else return 16 + age * 4;
+    })
+    .filter((age) => age >= 18)
+    .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
 };
 console.log(calcAverageHumanAge(data));
