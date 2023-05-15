@@ -11,3 +11,9 @@
 
 <img src = bankist12.png>
 <img src = bankist12-2.png>
+
+## Section 13 Updates
+
+    - Home website for bankist app, modal window functionality, smooth scrolling, lazy loading, and a slider
+
+<img src = bankist13.png>

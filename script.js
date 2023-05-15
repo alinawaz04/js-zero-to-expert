@@ -1,499 +1,461 @@
 "use strict";
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
+///////////////////////////////////////
+// selections
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const btnCloseModal = document.querySelector(".btn--close-modal");
+const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+const nav = document.querySelector(".nav");
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
 
-// DIFFERENT DATA! Contains movement dates, currency and locale
+///////////////////////////////////////
+// Modal window
 
-const account1 = {
-  owner: "Jonas Schmedtmann",
-  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-  interestRate: 1.2, // %
-  pin: 1111,
-
-  movementsDates: [
-    "2019-11-18T21:31:17.178Z",
-    "2019-12-23T07:42:02.383Z",
-    "2020-01-28T09:15:04.904Z",
-    "2020-04-01T10:17:24.185Z",
-    "2020-05-08T14:11:59.604Z",
-    "2023-05-06T17:01:17.194Z",
-    "2023-05-09T23:36:17.929Z",
-    "2023-05-10T10:51:36.790Z",
-  ],
-  currency: "EUR",
-  locale: "pt-PT", // de-DE
+const openModal = function (e) {
+  e.preventDefault();
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
 };
 
-const account2 = {
-  owner: "Jessica Davis",
-  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-  interestRate: 1.5,
-  pin: 2222,
-
-  movementsDates: [
-    "2019-11-01T13:15:33.035Z",
-    "2019-11-30T09:48:16.867Z",
-    "2019-12-25T06:04:23.907Z",
-    "2020-01-25T14:18:46.235Z",
-    "2020-02-05T16:33:06.386Z",
-    "2020-04-10T14:43:26.374Z",
-    "2020-06-25T18:49:59.371Z",
-    "2020-07-26T12:01:20.894Z",
-  ],
-  currency: "USD",
-  locale: "en-US",
+const closeModal = function () {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
 };
 
-const accounts = [account1, account2];
+btnsOpenModal.forEach((btn) => btn.addEventListener("click", openModal));
 
-// Elements
-const labelWelcome = document.querySelector(".welcome");
-const labelDate = document.querySelector(".date");
-const labelBalance = document.querySelector(".balance__value");
-const labelSumIn = document.querySelector(".summary__value--in");
-const labelSumOut = document.querySelector(".summary__value--out");
-const labelSumInterest = document.querySelector(".summary__value--interest");
-const labelTimer = document.querySelector(".timer");
+btnCloseModal.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
 
-const containerApp = document.querySelector(".app");
-const containerMovements = document.querySelector(".movements");
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    closeModal();
+  }
+});
+///////////////////////////////////////
+// button scrolling
 
-const btnLogin = document.querySelector(".login__btn");
-const btnTransfer = document.querySelector(".form__btn--transfer");
-const btnLoan = document.querySelector(".form__btn--loan");
-const btnClose = document.querySelector(".form__btn--close");
-const btnSort = document.querySelector(".btn--sort");
+btnScrollTo.addEventListener("click", function (e) {
+  section1.scrollIntoView({ behavior: "smooth" });
+});
 
-const inputLoginUsername = document.querySelector(".login__input--user");
-const inputLoginPin = document.querySelector(".login__input--pin");
-const inputTransferTo = document.querySelector(".form__input--to");
-const inputTransferAmount = document.querySelector(".form__input--amount");
-const inputLoanAmount = document.querySelector(".form__input--loan-amount");
-const inputCloseUsername = document.querySelector(".form__input--user");
-const inputClosePin = document.querySelector(".form__input--pin");
+///////////////////////////////////////
+// event delegation
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
 
-const formatMovementDate = function (date, locale) {
-  const calcDaysPassed = (date1, date2) =>
-    Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault();
 
-  const daysPassed = calcDaysPassed(new Date(), date);
-  console.log(daysPassed);
+  // matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+});
 
-  if (daysPassed === 0) return "Today";
-  if (daysPassed === 1) return "Yesterday";
-  if (daysPassed <= 7) return `${daysPassed} days ago`;
+///////////////////////////////////////
+// tabbed component
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
 
-  // const day = `${date.getDate()}`.padStart(2, 0);
-  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  // const year = date.getFullYear();
+  // guard clause
+  if (!clicked) return;
 
-  // return `${month}/${day}/${year}`;
+  // active tab
+  tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+  clicked.classList.add("operations__tab--active");
 
-  return new Intl.DateTimeFormat(locale).format(date);
+  // activate content area
+  tabsContent.forEach((t) => t.classList.remove("operations__content--active"));
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+///////////////////////////////////////
+// menu fade animation
+
+const handleHover = function (e) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+
+    siblings.forEach((el) => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
 };
-const formatCurr = function (value, locale, currency) {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currency,
-  }).format(value);
+
+// passing "argument" into handler
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
+
+///////////////////////////////////////
+// sticky navigation
+
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
+// window.addEventListener('scroll', function (e) {
+//   console.log(window.scrollY);
+
+//   if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// sticky navigation: the better way - Intersection Observer API
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const header = document.querySelector(".header");
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
 };
-const displayMovements = function (acc, sort = false) {
-  containerMovements.innerHTML = "";
 
-  const movs = sort
-    ? acc.movements.slice().sort((a, b) => a - b)
-    : acc.movements;
+const headObs = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headObs.observe(header);
 
-  movs.forEach(function (mov, i) {
-    const type = mov > 0 ? `deposit` : `withdrawal`;
+///////////////////////////////////////
+// reveal sections
+const allSections = document.querySelectorAll(".section");
 
-    const date = new Date(acc.movementsDates[i]);
-    const displayDate = formatMovementDate(date, acc.locale);
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
 
-    const formattedMov = formatCurr(mov, acc.locale, acc.currency);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section--hidden");
+  observer.unobserve(entry.target);
+};
 
-    const html = `
-    <div class="movements__row">
-      <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
-    <div class="movements__date">${displayDate}</div>
-      <div class="movements__value">${formattedMov}</div>
-    </div>`;
+const sectionObs = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
 
-    containerMovements.insertAdjacentHTML("afterbegin", html);
+allSections.forEach(function (section) {
+  sectionObs.observe(section);
+  // section.classList.add('section--hidden');
+});
+
+///////////////////////////////////////
+// lazy loading images
+const imgTargets = document.querySelectorAll("img[data-src]");
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener("load", function () {
+    entry.target.classList.remove("lazy-img");
   });
-};
-const createUsername = function (accs) {
-  accs.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLocaleLowerCase()
-      .split(" ")
-      .map((word) => word[0])
-      .join("");
-  });
-};
-const calcPrintBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-
-  labelBalance.textContent = formatCurr(acc.balance, acc.locale, acc.currency);
-};
-const calcDisplaySummary = function (acc) {
-  const income = acc.movements
-    .filter((mov) => mov > 0)
-    .reduce((acc, mov) => acc + mov, 0);
-
-  labelSumIn.textContent = formatCurr(income, acc.locale, acc.currency);
-
-  const out = acc.movements
-    .filter((mov) => mov < 0)
-    .reduce((acc, mov) => acc + mov, 0);
-
-  labelSumOut.textContent = formatCurr(Math.abs(out), acc.locale, acc.currency);
-
-  const interest = acc.movements
-    .filter((mov) => mov > 0)
-    .map((deposit) => (deposit * acc.interestRate) / 100)
-    .filter((int, i, arr) => {
-      return int >= 1;
-    })
-    .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = formatCurr(interest, acc.locale, acc.currency);
+  observer.unobserve(entry.target);
 };
 
-const updateUI = function (acc) {
-  displayMovements(acc);
+const imgObs = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px",
+});
 
-  // display balance
-  calcPrintBalance(acc);
+imgTargets.forEach((img) => imgObs.observe(img));
 
-  // display summary
-  calcDisplaySummary(acc);
-};
-createUsername(accounts);
+///////////////////////////////////////
+// slider
+const slider = function () {
+  const slides = document.querySelectorAll(".slide");
+  const btnLeft = document.querySelector(".slider__btn--left");
+  const btnRight = document.querySelector(".slider__btn--right");
+  const dotCont = document.querySelector(".dots");
 
-const startLogoutTimer = function () {
-  const tick = function () {
-    const min = String(Math.trunc(time / 60)).padStart(2, 0);
-    const seconds = String(time % 60).padStart(2, 0);
+  let curSlide = 0;
+  const maxSlide = slides.length;
 
-    // in each call, print remaining time to user interface
-    labelTimer.textContent = `${min}:${seconds}`;
-
-    // when 0, stop timer and log out user
-    if (time === 0) {
-      clearInterval(timer);
-      labelWelcome.textContent = "Log in to get started";
-      containerApp.style.opacity = 0;
-    }
-
-    // decrease 1s
-    time--;
+  // functions
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotCont.insertAdjacentHTML(
+        "beforeend",
+        `<button class ="dots__dot" data-slide="${i}"></button>`
+      );
+    });
   };
-  // set time to 5 minutes
-  let time = 30;
-  // call the timer every second
-  tick();
-  const timer = setInterval(tick, 1000);
-  return timer;
-};
 
-//event handler
-let sorted = false;
-btnSort.addEventListener("click", function (e) {
-  e.preventDefault();
-  displayMovements(currAccount.movements, !sorted);
-  sorted = !sorted;
-});
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll(".dots__dot")
+      .forEach((dot) => dot.classList.remove("dots__dot--active"));
 
-let currAccount;
-let timer;
-
-// FAKE ALWAYS LOGGED IN
-// currAccount = account1;
-// updateUI(currAccount);
-// containerApp.style.opacity = 100;
-
-// day/month/year
-
-// experimenting API
-
-btnLogin.addEventListener("click", function (e) {
-  // prevent form from sumbitting
-  e.preventDefault();
-
-  currAccount = accounts.find(
-    (acc) => acc.username === inputLoginUsername.value
-  );
-  console.log(currAccount);
-
-  if (currAccount?.pin === +inputLoginPin.value) {
-    // display UI and welcome message
-    labelWelcome.textContent = `Welcome back, ${
-      currAccount.owner.split(" ")[0]
-    }`;
-    containerApp.style.opacity = 100;
-
-    // create current date and time
-    const now = new Date();
-    const options = {
-      hour: "numeric",
-      minute: "numeric",
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-      // weekday: "short",
-    };
-
-    // const locale = navigator.language;
-    // console.log(locale);
-    labelDate.textContent = new Intl.DateTimeFormat(
-      currAccount.locale,
-      options
-    ).format(now);
-
-    // clear input fields
-    inputLoginUsername.value = inputLoginPin.value = "";
-    inputLoginPin.blur();
-
-    // timer
-    if (timer) clearInterval(timer);
-    timer = startLogoutTimer();
-
-    // update UI
-    updateUI(currAccount);
-  }
-});
-
-btnTransfer.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  const amount = +inputTransferAmount.value;
-  const reciever = accounts.find(
-    (acc) => acc.username === inputTransferTo.value
-  );
-
-  console.log(reciever, amount);
-
-  if (
-    amount > 0 &&
-    reciever &&
-    currAccount.balance >= amount &&
-    reciever?.username !== currAccount.username
-  ) {
-    currAccount.movements.push(-amount);
-    reciever.movements.push(amount);
-
-    inputTransferAmount.value = inputTransferTo.value = "";
-    inputTransferAmount.blur();
-    inputTransferTo.blur();
-    // add transfer date
-    currAccount.movementsDates.push(new Date().toISOString());
-    reciever.movementsDates.push(new Date().toISOString());
-
-    updateUI(currAccount);
-
-    // Reset timer
-    clearInterval(timer);
-    timer = startLogoutTimer();
-  }
-});
-
-btnLoan.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  const amount = Math.floor(inputLoanAmount.value);
-
-  if (amount > 0 && currAccount.movements.some((mov) => mov >= amount * 0.1)) {
-    setTimeout(function () {
-      currAccount.movements.push(amount);
-      // add movement date
-      currAccount.movementsDates.push(new Date().toISOString());
-
-      // update UI
-      updateUI(currAccount);
-    }, 2500);
-  }
-
-  inputLoanAmount.value = "";
-
-  // Reset timer
-  clearInterval(timer);
-  timer = startLogoutTimer();
-});
-
-btnClose.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  if (
-    +inputClosePin.value === currAccount.pin &&
-    inputCloseUsername.value === currAccount.username
-  ) {
-    inputCloseUsername.value = inputClosePin.value = "";
-    inputCloseUsername.blur();
-    inputClosePin.blur();
-    const index = accounts.findIndex(
-      (acc) => acc.username === currAccount.username
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add("dots__dot--active");
+  };
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${(i - slide) * 100}%)`)
     );
-    console.log(index);
-    // delete account
-    accounts.splice(index, 1);
+  };
 
-    // hide ui
-    containerApp.style.opacity = 0;
-  }
-});
+  // next slide
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else curSlide++;
+
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  // previous slide
+  const prevSlide = function () {
+    if (curSlide === 0) curSlide = maxSlide - 1;
+    else curSlide--;
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+  const init = function () {
+    createDots();
+    activateDot(0);
+    goToSlide(0);
+  };
+  init();
+  // event handlers
+  btnRight.addEventListener("click", nextSlide);
+  btnLeft.addEventListener("click", prevSlide);
+
+  document.addEventListener("keydown", function (e) {
+    console.log(e);
+    if (e.key === "ArrowLeft") prevSlide();
+    if (e.key === "ArrowRight") nextSlide();
+  });
+
+  dotCont.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dots__dot")) {
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+};
+slider();
 
 /*
-//      TODO lesson 170 converting and checking numbers
-console.log(23 === 23.0);
+//      TODO lesson 186 selecting, creating, and deleting elements
 
-// base 10 - 0 to 9. 1/10 = 0.1. 3/10 = 3.333333
-// binary case 2 - 0 to 1
-console.log(0.1 + 0.2);
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
 
-// conversion
-console.log(+"23");
-console.log(+"23");
+const header = document.querySelector('.header');
+const allSelections = document.querySelectorAll('.section');
+// console.log(allSelections);
 
-// parsing
-console.log(Number.parseInt("30px", 10)); // 30
-console.log(Number.parseInt("e23", 10)); // NaN
+document.getElementById('section--1');
+const allButtons = document.getElementsByTagName('button');
+// console.log(allButtons);
 
-console.log(Number.parseFloat("2.5rem")); // 2.5
-console.log(Number.parseInt("2.5rem")); // 2
+// console.log(document.getElementsByClassName('btn'));
 
-// check if value is NaN
-console.log(Number.isNaN(20)); // false
-console.log(Number.isNaN("20")); // false
-console.log(Number.isNaN(+"20X")); // true
-console.log(Number.isNaN(23 / 0)); // false
+// creating and inserting elements
+// .insertAdjacentHTML
 
-// checking if value is number
-console.log(Number.isFinite(20)); // true
-console.log(Number.isFinite("20")); // false
-console.log(Number.isFinite(+"20X")); // false
-console.log(Number.isFinite(23 / 0)); // false
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+// message.textContent = "We use cookies for improved functionality and analytics.";
+message.innerHTML =
+  "We use cookies for improved functionality and analytics. <button class = 'btn btn--close-cookie'>Got it!</button>";
+// header.prepend(message);
+header.append(message);
+// header.append(message.cloneNode(true));
 
-console.log(Number.isInteger(23)); // true
-console.log(Number.isInteger(23.0)); // true
-console.log(Number.isInteger(23 / 0)); // false
+// header.before(message);
 
-//      TODO lesson 171 Math and Rounding
-console.log(Math.sqrt(25));
-console.log(25 ** (1 / 2));
-console.log(8 ** (1 / 3));
-
-console.log(Math.max(5, 1, 8, "23", 11, 2)); // 23
-console.log(Math.max(5, 1, 8, "23px", 11, 2)); // NaN
-
-//      TODO lesson 172 the remainder operator
-
-labelBalance.addEventListener("click", function () {
-  [...document.querySelectorAll(".movements__row")].forEach(function (row, i) {
-    // 0,2,4,6
-    if (i % 2 === 0) row.style.backgroundColor = "orangered";
-    // 0,3,6,9
-    if (i % 3 === 0) row.style.backgroundColor = "blue";
+// delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
   });
-});
 
-//      TODO lesson 173 numeric seperator
-// 287486000000
-const diameter = 287_486_000_000;
-console.log(diameter);
+//      TODO lesson 187 styles, attributes, and classes
 
-const price = 345_99;
-console.log(price);
+// styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
 
-const transferFee = 15_00;
-const transferFee2 = 1_500;
+console.log(message.style.height);
+console.log(message.style.backgroundColor);
+console.log(getComputedStyle(message).height);
 
-//      TODO lesson 174 working with BigInt
-console.log(Number.MAX_SAFE_INTEGER);
-console.log(7825742305873420598734258n);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+console.log(getComputedStyle(message).height);
 
+document.documentElement.style.setProperty('--color-primary', 'orangered');
 
-//      TODO lesson 175 creating dates
-// const now = new Date();
-// console.log(now);
+// attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
 
-// console.log(new Date("Aug 02 2020 18:05:41"));
-// console.log(new Date("December 24, 2015"));
-// console.log(new Date(account1.movementsDates[0]));
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
 
-// console.log(new Date(2037, 10, 19, 15, 23, 5));
+logo.setAttribute('company', 'Bankist');
 
-// console.log(new Date(1));
-// console.log(new Date(3 * 24 * 60 * 60 * 1000));
+const link = document.querySelector('.twitter-link');
+console.log(link.href);
+console.log(link.getAttribute('href'));
 
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(future);
-console.log(future.getFullYear());
-console.log(future.getMonth());
-console.log(future.getDate());
-console.log(future.getDay());
-console.log(future.getHours());
-console.log(future.getMinutes());
-console.log(future.getSeconds());
-console.log(future.toISOString());
-console.log(future.getTime());
+// data attributes
+console.log(logo.dataset.versionNumber);
 
-console.log(Date.now());
-
-future.setFullYear(2040);
-console.log(future);
-
-//      TODO lesson 177 operations with dates
-const future = new Date(2037, 10, 19, 15, 23);
-console.log(+future);
-
-const calcDaysPassed = (date1, date2) =>
-  Math.abs((date2 - date1) / (1000 * 60 * 60 * 24));
-
-const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
-console.log(days1);
-
-//      TODO lesson 178 internationalizing dates (intl)
-
-
-//      TODO lesson 179 internationalizing numbers (intl)
-const num = 3884234.23;
-
-const options = {
-  style: "currency",
-  unit: "celsius",
-  currency: "EUR",
-};
-
-console.log("US: ", new Intl.NumberFormat("en-US", options).format(num));
-console.log("Germany: ", new Intl.NumberFormat("de-DE", options).format(num));
-console.log("Syria: ", new Intl.NumberFormat("ar-SY", options).format(num));
-
-//      TODO lesson 180 timers: setTimeout and setInterval
-// setTimeout
-const ings = ["olives", "spinach"];
-
-const pizzaTimer = setTimeout(
-  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
-  3000,
-  ...ings
-);
-console.log("Waiting...");
-
-if (ings.includes("spinach")) clearTimeout(pizzaTimer);
-
-// setInterval
-setInterval(function () {
-  const now = new Date();
-  console.log(
-    Intl.DateTimeFormat(navigator.language, {
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    }).format(now)
-  );
-}, 1000);
+// classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c');
 */
+
+//      TODO lesson 188 implementing smooth scrolling // TODO cont. with lesson 192 event delegation
+
+// // scrolling
+// window.scrollTo(
+//   s1coords.left + window.pageXOffset,
+//   s1coords.top + window.pageYOffset
+// );
+
+// window.scrollTo({
+//   left: s1coords.left + window.pageXOffset,
+//   top: s1coords.top + window.pageYOffset,
+//   behavior: 'smooth',
+// });
+
+// section1.scrollIntoView({ behavior: 'smooth' }); // modern way
+
+///////////////////////////////////////
+// page navigation and event delegation
+
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+//      TODO lesson 189 types of events and event handlers
+
+// const h1 = document.querySelector('h1');
+
+// const alertH1 = function (e) {
+//   alert('addEventListener: great! you are reading the heading!');
+// };
+
+// h1.addEventListener('mouseenter', alertH1);
+
+// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (e) {
+//   alert('addEventListener: great! You are reading the heading!');
+// };
+
+// //      TODO lesson 191 event propagation
+
+// // rgb(255,255,255)
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
+
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// console.log(randomColor());
+
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('Link', e.target, e.currentTarget);
+
+//   // stop propagation
+//   // e.stopPropagation();
+// });
+
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('Container', e.target, e.currentTarget);
+// });
+
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('Nav', e.target, e.currentTarget);
+// });
+
+//      TODO lesson 193 DOM traversing
+
+// const h1 = document.querySelector('h1');
+// console.log(h1.textContent);
+
+// // going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'green';
+
+// // going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// // going sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(function (el) {
+//   if (el !== h1) el.style.transform = 'scale(0.5)';
+// });
+//      TODO lesson 202 lifecycle dom events
+// document.addEventListener('DOMContentLoaded', function (e) {
+//   console.log('HTML parsed and DOM tree built', e);
+// });
+
+// window.addEventListener('load', function (e) {
+//   console.log('Page fully loaded', e);
+// });
+
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   console.log(e);
+//   e.returnValue = '';
+// });
+
+//      TODO lesson 203 efficient script loading
