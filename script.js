@@ -126,21 +126,24 @@ class CarCl {
 }
 
 class EVCl extends CarCl {
+  #charge;
   constructor(make, speed, charge) {
     super(make, speed);
-    this._charge = charge;
+    this.#charge = charge;
   }
 
   chargeBattery(chargeTo) {
-    this._charge = chargeTo;
+    this.#charge = chargeTo;
     return this;
   }
 
   accelerate() {
     this.speed += 20;
-    this._charge--;
+    this.#charge--;
     console.log(
-      `${this.make} going at ${this.speed} km/h, with a charge of ${this._charge}%`
+      `${this.make} going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }%`
     );
     return this;
   }
