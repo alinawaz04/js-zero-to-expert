@@ -61,7 +61,6 @@ console.log(ford);
 console.log(ford.speedUS);
 ford.speedUS = 50;
 console.log(ford);
-*/
 //          TODO challenge 3
 
 const Car = function (make, speed) {
@@ -96,6 +95,9 @@ EV.prototype.accelerate = function () {
   );
 };
 
+EV.prototype.constructor = EV;
+console.dir(EV.prototype.constructor);
+
 const tesla = new EV("Tesla", 120, 23);
 console.log(tesla);
 tesla.accelerate();
@@ -104,3 +106,47 @@ tesla.brake();
 console.log(tesla);
 tesla.chargeBattery(90);
 console.log(tesla);
+*/
+
+//          TODO challenge 4
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+  }
+
+  brake() {
+    this.speed -= 5;
+    return this;
+  }
+}
+
+class EVCl extends CarCl {
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this._charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this._charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this._charge--;
+    console.log(
+      `${this.make} going at ${this.speed} km/h, with a charge of ${this._charge}%`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl("Rivian", 120, 23);
+console.log(rivian);
+rivian.brake().accelerate().chargeBattery(90);
+console.log(rivian);
