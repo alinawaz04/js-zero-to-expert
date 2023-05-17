@@ -1,1 +1,1 @@
-# js-zero-to-expert
+# Mapty // Map Your Workouts
