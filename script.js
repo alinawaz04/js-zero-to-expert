@@ -35,11 +35,12 @@ class Workout {
 class Running extends Workout {
   type = "running";
 
-  constructor(coords, distance, duration, cadence) {
+  constructor(coords, distance, duration, cadence, id = null) {
     super(coords, distance, duration);
     this.cadence = cadence;
     this.calcPace();
     this._setDesc();
+    if (id) this.id = id;
   }
 
   calcPace() {
@@ -50,11 +51,12 @@ class Running extends Workout {
 
 class Cycling extends Workout {
   type = "cycling";
-  constructor(coords, distance, duration, elevationGain) {
+  constructor(coords, distance, duration, elevationGain, id = null) {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
     this.calcSpeed();
     this._setDesc();
+    if (id) this.id = id;
   }
 
   calcSpeed() {
@@ -312,6 +314,8 @@ class App {
   }
 
   _editWorkout(e) {
+    // this._deleteWorkout(e);
+
     const workoutEl = e.target.closest(".workout");
     if (!workoutEl) return;
 
@@ -338,11 +342,8 @@ class App {
     form.style.display = "grid";
     form.classList.remove("hidden");
 
-    // update workout in the array
-    this.#workouts[workoutIndex] = workout;
-
-    // remove workout from UI
-    workoutEl.remove();
+    // // update workout in the array
+    // this.#workouts[workoutIndex] = workout;
 
     // Update the workout object instead of replacing it
     this.#workouts[workoutIndex] = {
@@ -354,11 +355,21 @@ class App {
       elevationGain: +inputElevation.value || 0,
     };
 
-    // render workout as list
-    this._renderWorkout(this.#workouts[workoutIndex]);
     // set local storage to all workouts
     this._setLocalStorage();
+
+    // remove old workout from UI
+    workoutEl.remove();
+
+    // update workout marker on the map
+    this.#map.removeLayer(workout.marker);
+    this._renderWorkoutMarker(this.#workouts[workoutIndex]);
   }
+
+  // render workout as list
+  // this._renderWorkout(this.#workouts[workoutIndex]);
+  // console.log(workout);
+  _submitEdit(e) {}
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest(".workout");
@@ -376,6 +387,10 @@ class App {
       },
     });
   }
+
+  // _setLocalStorage() {
+  //   localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+  // }
 
   _setLocalStorage() {
     const workoutsWithoutMarkers = this.#workouts.map(workout => {
@@ -404,14 +419,16 @@ class App {
           work.coords,
           work.distance,
           work.duration,
-          work.cadence
+          work.cadence,
+          work.id
         );
       } else if (work.type === "cycling") {
         return new Cycling(
           work.coords,
           work.distance,
           work.duration,
-          work.elevationGain
+          work.elevationGain,
+          work.id
         );
       }
       console.log(work);
