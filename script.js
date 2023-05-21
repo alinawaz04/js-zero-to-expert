@@ -329,7 +329,13 @@ class App {
 
     // Set the map event to the coordinates of the workout
     this.#mapEvent = { latlng: workout.coords };
-    console.log(this.#mapEvent);
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this._submitEdit(workout, workoutIndex);
+      }
+    });
 
     // update form values with workout data
     inputType.value = workout.type;
@@ -369,7 +375,43 @@ class App {
   // render workout as list
   // this._renderWorkout(this.#workouts[workoutIndex]);
   // console.log(workout);
-  _submitEdit(e) {}
+  _submitEdit(workout, workoutIndex) {
+    // Delete the old unedited object from local storage
+    const storedWorkouts = JSON.parse(localStorage.getItem("workouts"));
+    const updatedWorkouts = storedWorkouts.filter(
+      work => work.id !== workout.id
+    );
+    localStorage.setItem("workouts", JSON.stringify(updatedWorkouts));
+
+    // Submit the new edited object
+    const editedWorkout = {
+      ...workout,
+      type: inputType.value,
+      distance: +inputDistance.value,
+      duration: +inputDuration.value,
+      cadence: +inputCadence.value || 0,
+      elevationGain: +inputElevation.value || 0,
+    };
+
+    // Update the workout in the array
+    this.#workouts[workoutIndex] = editedWorkout;
+
+    // Set local storage to all workouts
+    this._setLocalStorage();
+
+    // Remove old workout from UI
+    const workoutEl = document.querySelector(`[data-id="${workout.id}"]`);
+    if (workoutEl) workoutEl.remove();
+
+    // Update workout marker on the map
+    this.#map.removeLayer(workout.marker);
+    this._renderWorkoutMarker(editedWorkout);
+
+    // Hide the form
+    this._hideForm();
+
+    location.reload();
+  }
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest(".workout");
