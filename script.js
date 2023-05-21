@@ -1,155 +1,57 @@
-/*
-//          TODO challenge 1
-const Car = function (make, speed) {
-  this.make = make;
-  this.speed = speed;
+const countriesContainer = document.querySelector(".countries");
+
+const renderCountry = function (data, className = "") {
+  const html = `
+        <article class="country ${className}">
+            <img class="country__img" src="${data.flag}" />
+            <div class="country__data">
+                <h3 class="country__name">${data.name}</h3>
+                <h4 class="country__region">${data.region}</h4>
+                <p class="country__row"><span>👫</span>${(
+                  data.population / 1000000
+                ).toFixed(1)} million people</p>
+                <p class="country__row"><span>🗣️</span>${
+                  data.languages[0].name
+                }</p>
+                <p class="country__row"><span>💰</span>${
+                  data.currencies[0].name
+                }</p>
+            </div>
+        </article>`;
+
+  countriesContainer.insertAdjacentHTML("beforeend", html);
+  countriesContainer.style.opacity = 1;
 };
 
-Car.prototype.accelerate = function () {
-  this.speed += 10;
+const whereAmI = function (lat, lon) {
+  fetch(
+    `https://us1.locationiq.com/v1/reverse?key=pk.92a63246f5d68429169bf73abfc37e54&lat=${lat}&lon=${lon}&format=json`
+  )
+    .then((response) => {
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const city = data.address.city;
+      const country = data.address.country;
+      console.log(`You are in ${city}, ${country}`);
+      return fetch(`https://restcountries.com/v2/name/${country}`);
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      renderCountry(data[0]);
+    });
+
+  // render country
 };
 
-Car.prototype.decelerate = function () {
-  this.speed -= 5;
-};
-
-const bmw = new Car("BMW", 120);
-const mercedes = new Car("Mercedes", 95);
-
-console.log(bmw);
-bmw.accelerate();
-console.log(bmw);
-bmw.decelerate();
-console.log(bmw);
-
-console.log(mercedes);
-mercedes.accelerate();
-console.log(mercedes);
-mercedes.decelerate();
-console.log(mercedes);
-
-//          TODO challenge 2
-class CarCl {
-  constructor(make, speed) {
-    this.make = make;
-    this.speed = speed;
-  }
-
-  accelerate() {
-    this.speed += 10;
-  }
-
-  brake() {
-    this.speed -= 5;
-  }
-
-  get speedUS() {
-    return this.speed / 1.6;
-  }
-
-  set speedUS(speed) {
-    this.speed = speed * 1.6;
-  }
-}
-
-const ford = new CarCl("Ford", 120);
-console.log(ford);
-ford.accelerate();
-console.log(ford);
-ford.brake();
-console.log(ford);
-console.log(ford.speedUS);
-ford.speedUS = 50;
-console.log(ford);
-//          TODO challenge 3
-
-const Car = function (make, speed) {
-  this.make = make;
-  this.speed = speed;
-};
-
-Car.prototype.accelerate = function () {
-  this.speed += 10;
-};
-
-Car.prototype.brake = function () {
-  this.speed -= 5;
-};
-
-const EV = function (make, speed, charge) {
-  Car.call(this, make, speed);
-  this.charge = charge;
-};
-
-EV.prototype = Object.create(Car.prototype);
-
-EV.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
-};
-
-EV.prototype.accelerate = function () {
-  this.speed += 20;
-  this.charge--;
-  console.log(
-    `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`
-  );
-};
-
-EV.prototype.constructor = EV;
-console.dir(EV.prototype.constructor);
-
-const tesla = new EV("Tesla", 120, 23);
-console.log(tesla);
-tesla.accelerate();
-tesla.accelerate();
-tesla.brake();
-console.log(tesla);
-tesla.chargeBattery(90);
-console.log(tesla);
-*/
-
-//          TODO challenge 4
-class CarCl {
-  constructor(make, speed) {
-    this.make = make;
-    this.speed = speed;
-  }
-
-  accelerate() {
-    this.speed += 10;
-  }
-
-  brake() {
-    this.speed -= 5;
-    return this;
-  }
-}
-
-class EVCl extends CarCl {
-  #charge;
-  constructor(make, speed, charge) {
-    super(make, speed);
-    this.#charge = charge;
-  }
-
-  chargeBattery(chargeTo) {
-    this.#charge = chargeTo;
-    return this;
-  }
-
-  accelerate() {
-    this.speed += 20;
-    this.#charge--;
-    console.log(
-      `${this.make} going at ${this.speed} km/h, with a charge of ${
-        this.#charge
-      }%`
-    );
-    return this;
-  }
-}
-
-const rivian = new EVCl("Rivian", 120, 23);
-console.log(rivian);
-rivian.brake().accelerate().chargeBattery(90);
-console.log(rivian);
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474);
