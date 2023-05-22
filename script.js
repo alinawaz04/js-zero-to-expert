@@ -1,3 +1,4 @@
+/*
 const countriesContainer = document.querySelector(".countries");
 
 const renderCountry = function (data, className = "") {
@@ -55,3 +56,41 @@ const whereAmI = function (lat, lon) {
 whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
 whereAmI(-33.933, 18.474);
+*/
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const image = document.createElement("img");
+    image.src = imgPath;
+    image.classList.add("images");
+
+    image.addEventListener("load", function () {
+      document.body.appendChild(image);
+      resolve(image);
+    });
+  });
+};
+const images = ["img/img-1.jpg", "img/img-2.jpg", "img/img-3.jpg"];
+
+createImage("img/img-1.jpg").then((img) => {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      img.style.display = "none";
+      resolve(img);
+    }, 2000);
+  })
+    .then(() => {
+      return createImage("img/img-2.jpg");
+    })
+    .then((img) => {
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          img.style.display = "none";
+          resolve(img);
+        }, 2000);
+      });
+    })
+    .then(() => {
+      return createImage("img/img-3.jpg");
+    })
+    .catch((err) => console.log(err));
+});

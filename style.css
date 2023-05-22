@@ -111,6 +111,8 @@ body {
 
 .images {
   display: flex;
+  width: 800px;
+  height: 600px;
 }
 
 .images img {
