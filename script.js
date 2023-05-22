@@ -117,13 +117,13 @@ const wait = function (seconds) {
 // loadNPause();
 
 const loadAll = async function (imgArr) {
-  const imgs = imgArr.map(async (img) => {
-    return await createImage(img);
-  });
-
-  const imgEls = await Promise.all(imgs);
-  console.log(imgEls);
-  imgEls.forEach((img) => img.classList.add("parallel"));
+  try {
+    const imgs = imgArr.map(async (img) => await createImage(img));
+    const imgsEl = await Promise.all(imgs);
+    console.log(imgsEl);
+    imgsEl.forEach((img) => img.classList.add("parallel"));
+  } catch (err) {
+    console.error(err);
+  }
 };
-
 loadAll(["img/img-1.jpg", "img/img-2.jpg", "img/img-3.jpg"]);
