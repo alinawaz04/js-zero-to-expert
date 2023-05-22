@@ -12,7 +12,7 @@ html {
 body {
   font-family: system-ui;
   color: #555;
-  background-color: rgba(177, 118, 99, 0.884);
+  background-color: #f7f7f7;
   min-height: 100vh;
 
   display: flex;
@@ -55,7 +55,7 @@ body {
   font-size: 1.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: white;
+  color: #888;
 }
 
 .neighbour {
@@ -106,13 +106,10 @@ body {
   color: white;
   background-color: orangered;
   cursor: pointer;
-  margin-top: 1rem;
 }
 
 .images {
   display: flex;
-  width: 800px;
-  height: 600px;
 }
 
 .images img {
