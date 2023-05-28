@@ -14,7 +14,7 @@
   padding: 0 3.5rem;
 
   &::after {
-    content: '';
+    content: "";
     display: table;
     clear: both;
   }
@@ -27,6 +27,13 @@
       float: right;
     }
   }
+}
+
+.page--numbers {
+  font-weight: bolder;
+  text-align: center;
+  color: #f59a83;
+  font-size: 15px;
 }
 
 .copyright {
