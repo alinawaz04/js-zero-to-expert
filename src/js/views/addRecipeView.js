@@ -9,11 +9,15 @@ class AddRecipeView extends View {
   _overlay = document.querySelector(".overlay");
   _btnOpen = document.querySelector(".nav__btn--add-recipe");
   _btnClose = document.querySelector(".btn--close-modal");
+  _btnEdit = document.querySelector(".edit__btn");
+  ingredientCount = 1;
+  _ingColumn = document.querySelector(".ingredients");
 
   constructor() {
     super();
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
+    this._addIngredientHandler();
   }
 
   toggleWindow() {
@@ -35,8 +39,47 @@ class AddRecipeView extends View {
       e.preventDefault();
       const dataArr = [...new FormData(this)];
       const data = Object.fromEntries(dataArr);
+
+      if (!e.submitter.classList.contains("upload__btn")) {
+        return;
+      }
       handler(data);
     });
+  }
+
+  _addIngredientHandler() {
+    this._btnEdit.addEventListener("click", e => {
+      e.preventDefault();
+      this._addIngredient();
+    });
+  }
+
+  _addIngredient() {
+    this.ingredientCount++;
+
+    const label = document.createElement("label");
+    label.textContent = `Ingredient ${this.ingredientCount}`;
+
+    const quantityInput = document.createElement("input");
+    quantityInput.type = "text";
+    quantityInput.name = `ingredient-${this.ingredientCount}-quantity`;
+    quantityInput.placeholder = "Quantity";
+
+    const unitInput = document.createElement("input");
+    unitInput.type = "text";
+    unitInput.name = `ingredient-${this.ingredientCount}-unit`;
+    unitInput.placeholder = "Unit";
+
+    const descriptionInput = document.createElement("input");
+    descriptionInput.type = "text";
+    descriptionInput.name = `ingredient-${this.ingredientCount}-description`;
+    descriptionInput.placeholder = "Description";
+    descriptionInput.required = true;
+
+    this._ingColumn.appendChild(label);
+    this._ingColumn.appendChild(quantityInput);
+    this._ingColumn.appendChild(unitInput);
+    this._ingColumn.appendChild(descriptionInput);
   }
 
   _generateMarkup() {}
