@@ -142,3 +142,77 @@
     opacity: 1;
   }
 }
+
+.cart {
+  padding: 1rem 0;
+  position: absolute;
+  // right: 0;
+  right: -2.5rem;
+  z-index: 10;
+  width: 20rem;
+  background-color: #fff;
+  box-shadow: 0 0.8rem 5rem 2rem rgba($color-grey-dark-1, 0.1);
+
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s 0.2s;
+
+  &__list {
+    list-style: none;
+  }
+
+  &__field {
+    cursor: pointer;
+    padding: 0 4rem;
+
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $color-grey-light-2;
+    }
+  }
+
+  &:hover,
+  .nav__btn--bookmarks:hover + & {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.cart__list {
+  font-size: large;
+  color: black;
+  padding-left: 3rem;
+}
+
+.cart-msg svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cart-msg {
+  padding: 2rem;
+}
+
+.cart-item {
+  padding-bottom: 10px;
+}
+
+.cart-list-item {
+  display: flex;
+}
+
+.cart-btn {
+  position: absolute;
+  left: 15rem;
+  height: 3rem;
+  width: 3rem;
+  font-size: larger;
+  border: none;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+}

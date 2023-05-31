@@ -1,6 +1,7 @@
 import icons from "url:../../img/icons.svg";
 import fracty from "fracty";
 import View from "./View.js";
+import addRecipeView from "./addRecipeView.js";
 
 class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
@@ -62,6 +63,69 @@ class RecipeView extends View {
 
   addHandlerRender(handler) {
     ["hashchange", "load"].forEach(ev => window.addEventListener(ev, handler));
+  }
+
+  addHandlerEdit(handler) {
+    // Add event listener for the "Edit" button
+    // Delegate event listener to parent element
+    this._parentElement.addEventListener("click", function (e) {
+      const editBtn = e.target.closest(".edit--btn");
+      if (editBtn) {
+        const quantityEls = document.querySelectorAll(".recipe__quantity");
+        const unitEls = document.querySelectorAll(".recipe__unit");
+        const descriptionEls = document.querySelectorAll(
+          ".recipe__description"
+        );
+
+        const ingredients = [];
+
+        // Iterate over the ingredient elements
+        quantityEls.forEach((quantityEl, index) => {
+          const unitEl = unitEls[index];
+          const descriptionEl = descriptionEls[index];
+
+          const quantity = quantityEl.textContent;
+          const unit = unitEl.textContent;
+          const descriptionTweak = descriptionEl.textContent.trim().split("\n");
+          const description =
+            (descriptionTweak[1] && descriptionTweak[1].trim()) || "";
+
+          // Create an ingredient object
+          const ingredient = { quantity, unit, description };
+
+          // Add the ingredient object to the ingredients array
+          ingredients.push(ingredient);
+        });
+
+        handler(ingredients);
+      }
+    });
+  }
+
+  addHandlerAddToCart(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const cartBtn = e.target.closest(".add-to-cart");
+
+      if (!cartBtn) return;
+
+      const descriptionEl = cartBtn.parentElement.querySelector(
+        ".recipe__description"
+      );
+      console.log(descriptionEl);
+
+      const descriptionTweak = descriptionEl.textContent.trim().split("\n");
+      let description = "";
+      if (descriptionTweak.length === 2) {
+        description = (descriptionTweak[1] && descriptionTweak[1].trim()) || "";
+      }
+      if (descriptionTweak.length === 1) {
+        description = (descriptionTweak[0] && descriptionTweak[0].trim()) || "";
+      }
+
+      console.log(description);
+
+      handler(description.toLowerCase());
+    });
   }
 
   addHandlerUpdateServings(handler) {
@@ -130,6 +194,10 @@ class RecipeView extends View {
     </div>
 
     <div class="recipe__user-generated ${this._data.key ? "" : "hidden"}">
+        <button class = "btn edit--btn"> Edit </button>
+    </div>
+
+    <div class="recipe__user-generated ${this._data.key ? "" : "hidden"}">
         <svg>
           <use href="${icons}#icon-user"></use>
         </svg>
@@ -176,9 +244,11 @@ class RecipeView extends View {
   _generateMarkupIngredient(ing) {
     return `
             <li class="recipe__ingredient">
+                <button class = "add-to-cart"> 
                 <svg class="recipe__icon">
                     <use href="${icons}#icon-check"></use>
                 </svg>
+                </button>
                 <div class="recipe__quantity">${
                   ing.quantity ? fracty(ing.quantity) : ""
                 }</div>

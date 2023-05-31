@@ -37,6 +37,27 @@
         <nav class="nav">
           <ul class="nav__list">
             <li class="nav__item">
+              <button class="nav__btn nav__btn--bookmarks">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-check"></use>
+                </svg>
+                <span>Cart</span>
+              </button>
+              <div class="cart">
+                <ul class="cart__list">
+                  <div class="cart-msg">
+                    <div>
+                      <svg>
+                        <use href="src/img/cart.svg"></use>
+                      </svg>
+                    </div>
+                    <p>Cart empty</p>
+                  </div>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav__item">
               <button class="nav__btn nav__btn--add-recipe">
                 <svg class="nav__icon">
                   <use href="src/img/icons.svg#icon-edit"></use>
@@ -276,10 +297,11 @@
           <input value="1" required name="servings" type="number" />
         </div>
 
-        <div class="upload__column ingredients">
+        <div class="upload__column ingredients ing-1">
           <h3 class="upload__heading">Ingredients</h3>
 
           <label>Ingredient 1</label>
+
           <input
             value=""
             type="number"

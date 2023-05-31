@@ -211,3 +211,14 @@
     font-weight: 600;
   }
 }
+
+.btn--edit {
+  display: flex;
+  height: 8px;
+  width: 4px;
+  justify-content: center;
+  font-size: 15px;
+  margin-top: 45rem;
+  margin-left: 10rem;
+  border-radius: 50px;
+}

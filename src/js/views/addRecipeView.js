@@ -1,4 +1,4 @@
-import { RES_PER_PAGE } from "../config";
+import { DEFAULT_ING_AMT, RES_PER_PAGE } from "../config";
 import View from "./View";
 import icons from "url:../../img/icons.svg";
 
@@ -10,7 +10,8 @@ class AddRecipeView extends View {
   _btnOpen = document.querySelector(".nav__btn--add-recipe");
   _btnClose = document.querySelector(".btn--close-modal");
   _btnEdit = document.querySelector(".edit__btn");
-  ingredientCount = 1;
+  _btnEditIng = document.querySelector(".btn--edit");
+  ingredientCount = DEFAULT_ING_AMT;
   _ingColumn = document.querySelector(".ingredients");
 
   constructor() {
@@ -54,23 +55,28 @@ class AddRecipeView extends View {
     });
   }
 
-  _addIngredient() {
+  _addIngredient(quantity = "", unit = "", description = "") {
     this.ingredientCount++;
 
     const label = document.createElement("label");
     label.textContent = `Ingredient ${this.ingredientCount}`;
 
     const quantityInput = document.createElement("input");
+    quantityInput.value = quantity;
     quantityInput.type = "text";
     quantityInput.name = `ingredient-${this.ingredientCount}-quantity`;
     quantityInput.placeholder = "Quantity";
 
     const unitInput = document.createElement("input");
+    unitInput.value = unit;
+
     unitInput.type = "text";
     unitInput.name = `ingredient-${this.ingredientCount}-unit`;
     unitInput.placeholder = "Unit";
 
     const descriptionInput = document.createElement("input");
+    descriptionInput.value = description;
+
     descriptionInput.type = "text";
     descriptionInput.name = `ingredient-${this.ingredientCount}-description`;
     descriptionInput.placeholder = "Description";

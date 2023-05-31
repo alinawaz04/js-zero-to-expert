@@ -12,9 +12,11 @@ export const state = {
     resultsPerPage: RES_PER_PAGE,
   },
   bookmarks: [],
+  cart: [],
+  cartSet: new Set(),
 };
 
-const createRecipeObject = function (data) {
+const createRecipeObject = function (data, editable = false) {
   const { recipe } = data.data;
   return {
     id: recipe.id,
@@ -26,6 +28,7 @@ const createRecipeObject = function (data) {
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
+    editable: editable,
   };
 };
 
@@ -107,9 +110,20 @@ export const deleteBookmark = function (id) {
   persistBookmarks();
 };
 
+export const addToCart = function (description) {
+  if (description === "") return;
+  state.cartSet.add(description);
+  const cartArr = Array.from(state.cartSet);
+  persistCart(cartArr);
+  location.reload();
+};
+
 const init = function () {
   const storage = localStorage.getItem("bookmarks");
   if (storage) state.bookmarks = JSON.parse(storage);
+  const cart = localStorage.getItem("cart");
+  if (cart) state.cartSet = new Set(JSON.parse(cart));
+  console.log(state.cartSet);
 };
 
 init();
@@ -117,6 +131,10 @@ init();
 const clearBookmarks = function () {
   localStorage.clear("bookmarks");
 };
+const clearCart = function () {
+  localStorage.removeItem("cart");
+};
+clearCart();
 
 export const uploadRecipe = async function (newRecipe) {
   try {
@@ -146,11 +164,12 @@ export const uploadRecipe = async function (newRecipe) {
       cooking_time: +newRecipe.cookingTime,
       servings: +newRecipe.servings,
       ingredients,
+      editable: true,
     };
 
     console.log(recipe);
     const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
-    state.recipe = createRecipeObject(data);
+    state.recipe = createRecipeObject(data, true);
     addBookmark(state.recipe);
     console.log(data);
   } catch (err) {
@@ -158,34 +177,6 @@ export const uploadRecipe = async function (newRecipe) {
   }
 };
 
-// export const uploadRecipe = async function (newRecipe) {
-//   try {
-//     const ingredients = Object.entries(newRecipe)
-//       .filter(entry => entry[0].startsWith("ingredient") && entry[1] !== "")
-//       .map(ing => {
-//         const ingArr = ing[1].split(",").map(el => el.trim());
-//         if (ingArr.length !== 3)
-//           throw new Error("Wrong ingredient format! Try again dingus");
-//         const [quantity, unit, description] = ingArr;
-//         return { quantity: quantity ? +quantity : null, unit, description };
-//       });
-
-//     const recipe = {
-//       title: newRecipe.title,
-//       source_url: newRecipe.sourceUrl,
-//       image_url: newRecipe.image,
-//       publisher: newRecipe.publisher,
-//       cooking_time: +newRecipe.cookingTime,
-//       servings: +newRecipe.servings,
-//       ingredients,
-//     };
-
-//     console.log(recipe);
-//     const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
-//     state.recipe = createRecipeObject(data);
-//     addBookmark(state.recipe);
-//     console.log(data);
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+export const persistCart = function (cart) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
