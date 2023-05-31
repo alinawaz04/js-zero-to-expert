@@ -134,7 +134,7 @@ const clearBookmarks = function () {
 const clearCart = function () {
   localStorage.removeItem("cart");
 };
-clearCart();
+// clearCart();
 
 export const uploadRecipe = async function (newRecipe) {
   try {

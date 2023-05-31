@@ -24,11 +24,19 @@ class CartView extends View {
       // Get the text content of the cart item
       const cartItemText = listItem
         .querySelector(".cart-item")
-        .textContent.trim();
+        .textContent.trim()
+        .toLowerCase();
       console.log(cartItemText);
 
       model.state.cartSet.delete(cartItemText);
-      persistCart(model.state.cartSet);
+
+      // Retrieve the cart items from localStorage
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+      // Remove the item from the storedCart array
+      const updatedCart = storedCart.filter(item => item !== cartItemText);
+
+      // Save the updated cart items back to localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
 
       // Call the handler with the cart item text as an argument
       handler(cartItemText);
