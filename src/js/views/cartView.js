@@ -51,15 +51,18 @@ class CartView extends View {
     if (!printBtn) return;
 
     printBtn.addEventListener("click", () => {
-      const printWindow = window.open("", "_blank");
       const cart = localStorage.getItem("cart");
+      if (!cart) {
+        alert("Cart empty!");
+        return;
+      }
+      const printWindow = window.open("", "_blank");
 
       const cartArray = JSON.parse(cart);
       const cartFormattedString = cartArray
         .map(item => `- ${this._capitalizeFirstLetter(item)}`)
         .join("<br>");
 
-      if (!cart) return;
       printWindow.document.write(`
         <html>
           <head>

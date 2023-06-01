@@ -112,10 +112,47 @@ export const deleteBookmark = function (id) {
 
 export const addToCart = function (description) {
   if (description === "") return;
+
+  if (state.cartSet.has(description)) {
+    alert("Item is already in the cart");
+    return;
+  }
+
   state.cartSet.add(description);
   const cartArr = Array.from(state.cartSet);
   persistCart(cartArr);
-  location.reload();
+
+  // Get the cart element
+  const cartElement = document.querySelector(".cart__list");
+
+  // Create a new list item element
+  const listItem = document.createElement("li");
+  listItem.className = "cart-list-item";
+
+  // Create the cart item container
+  const cartItem = document.createElement("div");
+  cartItem.className = "cart-item";
+  cartItem.textContent =
+    description.charAt(0).toUpperCase() + description.slice(1);
+
+  // Create the delete button
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "cart-btn";
+  deleteBtn.innerHTML = "&times;";
+
+  // Add event listener to delete button
+  deleteBtn.addEventListener("click", () => {
+    listItem.remove();
+    state.cartSet.delete(description);
+    persistCart(Array.from(state.cartSet));
+  });
+
+  // Append the cart item and delete button to the list item
+  listItem.appendChild(cartItem);
+  listItem.appendChild(deleteBtn);
+
+  // Append the new list item to the cart element
+  cartElement.appendChild(listItem);
 };
 
 const init = function () {
@@ -131,6 +168,7 @@ init();
 const clearBookmarks = function () {
   localStorage.clear("bookmarks");
 };
+// clearBookmarks();
 const clearCart = function () {
   localStorage.removeItem("cart");
 };
