@@ -67,7 +67,7 @@ class AddRecipeView extends View {
 
     const quantityInput = document.createElement("input");
     quantityInput.value = quantity;
-    quantityInput.type = "text";
+    quantityInput.type = "number";
     quantityInput.name = `ingredient-${this.ingredientCount}-quantity`;
     quantityInput.placeholder = "Quantity";
 

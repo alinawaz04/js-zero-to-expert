@@ -68,9 +68,11 @@ class RecipeView extends View {
   addHandlerEdit(handler) {
     // Add event listener for the "Edit" button
     // Delegate event listener to parent element
-    this._parentElement.addEventListener("click", function (e) {
+    this._parentElement.addEventListener("click", e => {
       const editBtn = e.target.closest(".edit--btn");
       if (editBtn) {
+        this._editing = true;
+        console.log(this._editing);
         const quantityEls = document.querySelectorAll(".recipe__quantity");
         const unitEls = document.querySelectorAll(".recipe__unit");
         const descriptionEls = document.querySelectorAll(

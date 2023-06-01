@@ -2,6 +2,7 @@ import { API_URL, RES_PER_PAGE, KEY } from "./config";
 // import { getJSON, sendJSON } from "./helpers";
 import { AJAX } from "./helpers";
 import addRecipeView from "./views/addRecipeView";
+import recipeView from "./views/recipeView";
 
 export const state = {
   recipe: {},
@@ -210,6 +211,23 @@ export const uploadRecipe = async function (newRecipe) {
     state.recipe = createRecipeObject(data, true);
     addBookmark(state.recipe);
     console.log(data);
+
+    // const icon = document.querySelector('.recipe__user-generated');
+    // if (!icon) return;
+    // if (!icon.classList.contains('hidden')) {
+    console.log(recipeView._editing);
+    if (recipeView._editing) {
+      const id = window.location.hash.slice(1);
+      this.deleteBookmark(id);
+      recipeView.renderSpinner();
+      const deleteRecipe = await AJAX(
+        `${API_URL}${id}?key=${KEY}`,
+        null,
+        "DELETE"
+      );
+      window.location.hash = "";
+      recipeView._editing = false;
+    }
   } catch (err) {
     throw err;
   }
