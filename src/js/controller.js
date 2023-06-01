@@ -117,6 +117,8 @@ const controlAddRecipe = async function (newRecipe) {
     setTimeout(function () {
       addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SEC * 1000);
+
+    location.reload();
   } catch (err) {
     console.error(err);
     addRecipeView.renderError(err.message);
@@ -130,6 +132,7 @@ const controlEditRecipe = async function (recipe) {
   const firstListItem = document.querySelector(
     ".recipe__ingredient-list li.recipe__ingredient"
   );
+
   const ing1 = document.querySelector(".ing-1");
   console.log(ing1);
 
