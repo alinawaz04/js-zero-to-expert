@@ -189,10 +189,13 @@ const controlCartDelete = function (item) {
   console.log(item);
 };
 
+controlPrintPage = function () {};
+
 const init = function () {
   bookmarksView.addHadlerRender(controlBookmarks);
   cartView.addHadlerRender(controlCartView);
   cartView.addHandlerDeleteItem(controlCartDelete);
+  cartView.addHandlerPrintPage(controlPrintPage);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);

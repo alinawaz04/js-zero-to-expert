@@ -46,9 +46,66 @@ class CartView extends View {
     });
   }
 
+  addHandlerPrintPage(handler) {
+    const printBtn = document.getElementById("print-btn");
+    if (!printBtn) return;
+
+    printBtn.addEventListener("click", () => {
+      const printWindow = window.open("", "_blank");
+      const cart = localStorage.getItem("cart");
+
+      const cartArray = JSON.parse(cart);
+      const cartFormattedString = cartArray
+        .map(item => `- ${this._capitalizeFirstLetter(item)}`)
+        .join("<br>");
+
+      if (!cart) return;
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Shopping Cart</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+              }
+  
+              h1 {
+                text-align: center;
+                color: #333;
+              }
+  
+              ul {
+                list-style-type: disc;
+                padding-left: 20px;
+                text-align: center
+              }
+  
+              li {
+                margin-bottom: 10px;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Shopping Cart</h1>
+            <ul>
+               ${cartFormattedString}
+            </ul>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    });
+  }
+
+  _capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   _generateMarkup() {
-    const arr = Array.from(this._data);
-    return arr
+    this._data = Array.from(this._data);
+    return this._data
       .map(
         item =>
           `<li class="cart-list-item">
