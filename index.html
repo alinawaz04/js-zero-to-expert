@@ -300,30 +300,33 @@
 
         <div class="upload__column ingredients ing-1">
           <h3 class="upload__heading">Ingredients</h3>
-
-          <label>Ingredient 1</label>
-
-          <input
-            value=""
-            type="number"
-            step="any"
-            min="0"
-            name="ingredient-1-quantity"
-            placeholder="Quantity"
-          />
-          <input
-            value=""
-            type="text"
-            name="ingredient-1-unit"
-            placeholder="Unit"
-          />
-          <input
-            value=""
-            type="text"
-            required
-            name="ingredient-1-description"
-            placeholder="Description"
-          />
+          <div class="ingredient-container">
+            <label>Ingredient 1</label>
+            <div class="ingredient-inputs">
+              <input
+                value=""
+                type="number"
+                step="any"
+                min="0"
+                name="ingredient-1-quantity"
+                placeholder="Quantity"
+              />
+              <input
+                value=""
+                type="text"
+                name="ingredient-1-unit"
+                placeholder="Unit"
+              />
+              <input
+                value=""
+                type="text"
+                name="ingredient-1-description"
+                required
+                placeholder="Description"
+              />
+              <button class="delete-ing hidden">&times;</button>
+            </div>
+          </div>
         </div>
 
         <button class="btn upload__btn">

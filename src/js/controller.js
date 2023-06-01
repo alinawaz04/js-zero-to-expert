@@ -196,6 +196,10 @@ const controlCartDelete = function (item) {
 
 controlPrintPage = function () {};
 
+const controlDeleteIngredient = function () {
+  console.log("pls work");
+};
+
 const init = function () {
   bookmarksView.addHadlerRender(controlBookmarks);
   cartView.addHadlerRender(controlCartView);

@@ -19,6 +19,7 @@ class AddRecipeView extends View {
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
     this._addIngredientHandler();
+    this._deleteIngredientHandler();
   }
 
   toggleWindow() {
@@ -58,6 +59,9 @@ class AddRecipeView extends View {
   _addIngredient(quantity = "", unit = "", description = "") {
     this.ingredientCount++;
 
+    const ingredientContainer = document.createElement("div");
+    ingredientContainer.classList.add("ingredient-container");
+
     const label = document.createElement("label");
     label.textContent = `Ingredient ${this.ingredientCount}`;
 
@@ -69,23 +73,64 @@ class AddRecipeView extends View {
 
     const unitInput = document.createElement("input");
     unitInput.value = unit;
-
     unitInput.type = "text";
     unitInput.name = `ingredient-${this.ingredientCount}-unit`;
     unitInput.placeholder = "Unit";
 
     const descriptionInput = document.createElement("input");
     descriptionInput.value = description;
-
     descriptionInput.type = "text";
     descriptionInput.name = `ingredient-${this.ingredientCount}-description`;
     descriptionInput.placeholder = "Description";
-    descriptionInput.required = true;
+    // descriptionInput.required = true;
 
-    this._ingColumn.appendChild(label);
-    this._ingColumn.appendChild(quantityInput);
-    this._ingColumn.appendChild(unitInput);
-    this._ingColumn.appendChild(descriptionInput);
+    ingredientContainer.appendChild(label);
+    ingredientContainer.appendChild(quantityInput);
+    ingredientContainer.appendChild(unitInput);
+    ingredientContainer.appendChild(descriptionInput);
+
+    // Remove any existing delete buttons
+    const existingDeleteButtons = document.querySelectorAll(".delete-ing");
+    existingDeleteButtons.forEach(button => button.classList.add("hidden"));
+
+    if (this.ingredientCount > 1) {
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete-ing");
+      deleteButton.innerHTML = "&times;";
+      ingredientContainer.appendChild(deleteButton);
+    }
+
+    this._ingColumn.appendChild(ingredientContainer);
+  }
+
+  _deleteIngredientHandler() {
+    this._parentElement.addEventListener("click", e => {
+      const deleteBtn = e.target.closest(".delete-ing");
+      if (!deleteBtn) return;
+
+      const ingItem = deleteBtn.closest(".ingredient-container");
+      const ingredientItems = document.querySelectorAll(
+        ".ingredient-container"
+      );
+      const ingCount = ingredientItems.length;
+
+      if (this.ingredientCount > 1) {
+        ingItem.remove();
+        this.ingredientCount--;
+
+        // Check if there is a second-to-last ingredient
+        if (ingCount > 2) {
+          // Get the new second-to-last ingredient
+          const secondToLastIngItem = ingredientItems[ingCount - 2];
+          const deleteButton = secondToLastIngItem.querySelector(".delete-ing");
+
+          // Remove the hidden class from the delete button
+          if (deleteButton) {
+            deleteButton.classList.remove("hidden");
+          }
+        }
+      }
+    });
   }
 
   _generateMarkup() {}
