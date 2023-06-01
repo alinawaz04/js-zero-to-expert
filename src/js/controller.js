@@ -173,6 +173,8 @@ const controlEditRecipe = async function (recipe) {
   def = recipe.length;
 
   const id = window.location.hash.slice(1);
+  model.deleteBookmark(id);
+
   addRecipeView.toggleWindow();
   recipeView.renderSpinner();
   const deleteRecipe = await AJAX(`${API_URL}${id}?key=${KEY}`, null, "DELETE");
