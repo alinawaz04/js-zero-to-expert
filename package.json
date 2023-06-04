@@ -4,7 +4,8 @@
   "description": "Recipe app",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --no-scope-hoist --dist-dir ./dist",
+    "default": "index.html"
   },
   "author": "Ali Nawaz",
   "license": "ISC",

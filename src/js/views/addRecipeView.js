@@ -65,6 +65,9 @@ class AddRecipeView extends View {
     const label = document.createElement("label");
     label.textContent = `Ingredient ${this.ingredientCount}`;
 
+    const ingVals = document.createElement("div");
+    ingVals.classList.add("ingredient-inputs");
+
     const quantityInput = document.createElement("input");
     quantityInput.value = quantity;
     quantityInput.type = "number";
@@ -85,9 +88,11 @@ class AddRecipeView extends View {
     // descriptionInput.required = true;
 
     ingredientContainer.appendChild(label);
-    ingredientContainer.appendChild(quantityInput);
-    ingredientContainer.appendChild(unitInput);
-    ingredientContainer.appendChild(descriptionInput);
+    ingVals.appendChild(quantityInput);
+    ingVals.appendChild(unitInput);
+    ingVals.appendChild(descriptionInput);
+
+    ingredientContainer.appendChild(ingVals);
 
     // Remove any existing delete buttons
     const existingDeleteButtons = document.querySelectorAll(".delete-ing");

@@ -165,3 +165,13 @@
 .delete-ing {
   width: 10rem;
 }
+
+.ingredient-container {
+  max-width: 200rem;
+}
+
+.ingredient-inputs {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
